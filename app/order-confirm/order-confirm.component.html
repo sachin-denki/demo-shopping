@@ -1,0 +1,92 @@
+<body style="background-color: #dadad8" *ngIf="!isAdmin">
+  <div class="container">
+    <div class="card">
+      <h6 class="main" *ngIf="!isAdmin">
+        CONFIRM ORDERS <i class="fa-solid fa-square-check"></i>
+      </h6>
+      <h6 class="main" *ngIf="isAdmin">
+       <u>LIST OF ORDERS</u>
+      </h6>
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th *ngIf="isAdmin">Order-ID</th>
+            <th scope="col">PRICE</th>
+            <th scope="col">DATE</th>
+            <th scope="col">STATUS</th>
+            <th scope="col">PRODUCTS</th>
+          </tr>
+        </thead>
+        <tbody *ngFor="let item of orderlist">
+          <tr>
+            <th class="counterCell"></th>
+            <th *ngIf="isAdmin">{{item.orderNumber}}</th>
+            <td>{{ item.total | currency: "INR" }}</td>
+            <td>{{ item.updatedAt | date: "medium" }}</td>
+            <td>
+              <b>{{ item.status | uppercase }}</b>
+            </td>
+            <td>
+              <button
+                id="btn"
+                type="button"
+                class="btn"
+                data-bs-toggle="modal"
+                data-bs-target="#exampleModal"
+                (click)="getDetails(item.id)"
+              >
+                VIEW
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    
+      <h6 *ngIf="!isAdmin" style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif">
+        DETAILS: <u>ODERS WILL BE DELEVIRED WITHN <b>7 WORKING </b> DAYS</u>
+      </h6>
+    </div>
+  </div>
+</body>
+<!-- Modal -->
+<div
+  class="modal fade"
+  id="exampleModal"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div  class="modal-dialog modal-sm modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div class="modal-title" id="exampleModalLabel">
+          <div *ngFor="let item of cartItems" >
+            <h4>
+              NAME: <b>{{ item.productName | uppercase }}</b>
+            </h4>
+            <h4>
+              QTY: <b>{{ item.quantity }}</b>
+            </h4>
+            <h4>
+              PRICE: <b>{{ item.price | currency: "INR" }}</b>
+            </h4>
+            <hr>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button
+          id="btn"
+          type="button"
+          class="btn"
+          type="button"
+          data-bs-dismiss="modal"
+        >
+          CLOSE
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
